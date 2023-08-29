@@ -1,5 +1,6 @@
 const express = require("express");
 const path = require("path");
+const dotnet=require('dotenv').config();
 //解析html
 var ejs = require("ejs");
 var config = require("./config/default");
