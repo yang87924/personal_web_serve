@@ -2,6 +2,10 @@ const db = require("../lib/db");
 //新增walls
 exports.insertWall = async (req, res) => {
   let data = req.body;
+  // res.send({
+  //   code: 200,
+  //   message: "aa",
+  // });
   //console.log(data)
   await db
     .insertWall([
@@ -95,26 +99,29 @@ exports.deleteComment = async (req, res) => {
 //分業查詢wall並獲取讚數，舉報，撤銷數據
 exports.findWallPage = async (req, res) => {
   let data = req.body;
-  await db.findWallPage(data.page,data.pagesize,data.type,data.label)
-  .then(async result=>{
-    for(let i=0;i<result.lenght;i++){
-      //查詢對應強的讚，舉報，撤銷數據
-      result[i].like=await db.feedbackCount(result[i].id,0);
-      result[i].report=await db.feedbackCount(result[i].id,1);
-      result[i].revoke=await db.feedbackCount(result[i].id,2);
-      result[i].islike=await db.likeCount(result[i].id,data.userId);
-      result[i].comcount=await db.CommentCount(result[i].id);
-    }
-    res.send({
-      code:200,
-      message:result,
-    })
-  })
+  await db
+    .findWallPage(data.page, data.pagesize, data.type, data.label)
+    .then(async (result) => {
+      for (let i = 0; i < result.length; i++) {
+        //查詢對應強的讚，舉報，撤銷數據
+        result[i].like = await db.feedbackCount(result[i].id, 0);
+        console.log(result[i].like);
+        result[i].report = await db.feedbackCount(result[i].id, 1);
+        result[i].revoke = await db.feedbackCount(result[i].id, 2);
+        result[i].islike = await db.likeCount(result[i].id, data.userId);
+        result[i].comcount = await db.CommentCount(result[i].id);
+      }
+      //console.log(result);
+      res.send({
+        code: 200,
+        message: result,
+      });
+    });
 };
 //倒敘分頁查牆的評論
 exports.findCommentPage = async (req, res) => {
   let data = req.body;
-  await db.findCommentPage(data.page,data.pagesize,data.id).then((result) => {
+  await db.findCommentPage(data.page, data.pagesize, data.id).then((result) => {
     res.send({
       code: 200,
       message: result,
