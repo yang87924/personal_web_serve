@@ -49,6 +49,7 @@ exports.insertComment = async (req, res) => {
       data.userId,
       data.imgurl,
       data.moment,
+      data.comment,
       data.name,
     ])
     .then((result) => {
