@@ -30,7 +30,7 @@ exports.insertFeedback = async (req, res) => {
   let data = req.body;
   //console.log(data)
   await db
-    .insertFeedbacks([data.wallId, data.userId, data.type, data.moment])
+    .insertFeedback([data.wallId, data.userId, data.type, data.moment])
     .then((result) => {
       res.send({
         code: 200,
