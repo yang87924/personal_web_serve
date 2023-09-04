@@ -105,7 +105,6 @@ exports.findWallPage = async (req, res) => {
       for (let i = 0; i < result.length; i++) {
         //查詢對應強的讚，舉報，撤銷數據
         result[i].like = await db.feedbackCount(result[i].id, 0);
-        console.log(result[i].like);
         result[i].report = await db.feedbackCount(result[i].id, 1);
         result[i].revoke = await db.feedbackCount(result[i].id, 2);
         result[i].islike = await db.likeCount(result[i].id, data.userId);
