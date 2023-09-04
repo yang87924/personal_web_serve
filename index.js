@@ -42,7 +42,7 @@ app.use(express.urlencoded({ extended: true }));
 
 //引入路由
 require("./routes/index")(app);
-//require('./routes/files')(app);
+require('./routes/files')(app);
 
 app.listen(config.port, () => {
   console.log(`啟動了服務器${config.port}`);
