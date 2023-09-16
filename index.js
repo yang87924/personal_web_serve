@@ -1,6 +1,9 @@
 const express = require("express");
 const path = require("path");
 const dotnet = require("dotenv").config();
+const https = require("https");
+//引入fs模塊
+const fs = require("fs");
 //解析html
 var ejs = require("ejs");
 var config = require("./config/default");
@@ -32,7 +35,7 @@ app.all("*", function (req, res, next) {
 });
 
 //加入html視圖
-//app.set('views',path.join(__dirname, '/viewssss));
+//app.set('views',path.join(__dirname, '/viewssss'));
 app.engine("html", ejs.__express);
 app.set("view engine", "html");
 
@@ -42,7 +45,20 @@ app.use(express.urlencoded({ extended: true }));
 
 //引入路由
 require("./routes/index")(app);
-require('./routes/files')(app);
+require("./routes/files")(app);
+
+//使用HTTPS;
+// const options = {
+//   cert: fs.readFileSync(
+//     "/etc/letsencrypt/live/yangyang.myang.pp.ua/fullchain.pem"
+//   ),
+//   key: fs.readFileSync(
+//     "/etc/letsencrypt/live/yangyang.myang.pp.ua/privkey.pem"
+//   ),
+// };
+
+// https.createServer(options);
+//https.createServer(options);
 
 app.listen(config.port, () => {
   console.log(`啟動了服務器${config.port}`);
